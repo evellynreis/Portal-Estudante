@@ -1,18 +1,33 @@
-version: '3.3'
+version: '3.8'
+
 services:
-  mysql:
+  db:
     image: mysql:5.7
-    container_name: db
     restart: always
-    ports:
-      - "3306:3306"
     environment:
-      MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_db
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    networks:
+      - mysql-network
     volumes:
-      - ./docker/db:/var/lib/mysql
+      - db_data:/var/lib/mysql
+
+  php:
+    build:
+      context: .
+      dockerfile: DockerFile
+    container_name: php
+    restart: always
+    volumes:
+      - ./php:/var/www/html
+    ports:
+      - "8001:80"
+    depends_on:
+      - db   # Corrigido para referenciar o serviço 'db'
     networks:
       - mysql-network
 
@@ -24,21 +39,9 @@ services:
     networks:
       - mysql-network
 
-  php:
-    build:
-      context: .
-      dockerfile: DockerFile
-    container_name: php
-    restart: always
-    volumes:
-      - ./php/src:/var/www/html
-    ports:
-      - "8001:80"
-    depends_on:
-      - mysql
-    networks:
-      - mysql-network
-
 networks:
   mysql-network:
     driver: bridge
+
+volumes:
+  db_data:

@@ -3,6 +3,7 @@
 namespace Student\Controller;
 
 use Student\Models\AlunosModels;
+use Student\Controller\Conexao;
 
 class AlunosController
 {
@@ -18,18 +19,17 @@ class AlunosController
     private function getStudent()
     {
         $studentData = array(
-            'nome' => $_POST['nome'],
-            'email' => $_POST['email'],
-            'telefone' => $_POST['telefone'],
-            'valorMensalidade' => $_POST['valor_mensalidade'],
-            'senha' => $_POST['senha'],
-            'situacao' => $_POST['situacao'],
-            'observacao' => $_POST['observacao']
+            'nome' => $_POST['nome'] ?? '',
+            'email' => $_POST['email'] ?? '',
+            'telefone' => $_POST['telefone'] ?? '',
+            'valorMensalidade' => $_POST['valor_mensalidade'] ?? '',
+            'senha' => $_POST['senha'] ?? '',
+            'situacao' => $_POST['situacao'] ?? '',
+            'observacao' => $_POST['observacao'] ?? ''
         );
 
         return $studentData;
     }
-
 
     public function create()
     {
@@ -38,10 +38,24 @@ class AlunosController
             return false;
         }
 
+        $studentData = $this->getStudent();
+        if (empty($studentData['nome']) || empty($studentData['senha'])) {
+            return false;
+        }
+
         $aluno = new AlunosModels($conexao);
-        $addAlunos = $aluno->adicionarAluno($this->getStudent());
+        $addAlunos = $aluno->adicionarAluno(
+            $studentData['nome'],
+            $studentData['email'],
+            $studentData['telefone'],
+            $studentData['valorMensalidade'],
+            $studentData['senha'],
+            $studentData['situacao'],
+            $studentData['observacao']
+        );
 
         return $addAlunos;
     }
 
 }
+?>

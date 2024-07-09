@@ -1,15 +1,15 @@
 <?php
 namespace Student\Models;
 
-use Student\Controller\Conexao;
+use PDO;
 
 class AlunosModels
 {
     private $conn;
 
-    public function __construct(Conexao $conexao)
+    public function __construct(PDO $conexao)
     {
-        $this->conn = $conexao->getConexao();
+        $this->conn = $conexao;
     }
 
     public function adicionarAluno($nome, $email, $telefone, $valorMensalidade, $senha, $situacao, $observacao): bool
@@ -18,9 +18,9 @@ class AlunosModels
                 VALUES (?, ?, ?, ?, ?, ?, ?)';
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('sssssis', $nome, $email, $telefone, $valorMensalidade, $senha, $situacao, $observacao);
+        $stmt->execute([$nome, $email, $telefone, $valorMensalidade, $senha, $situacao, $observacao]);
 
-        return $stmt->execute();
+        return $stmt->rowCount() > 0;
     }
 
     public function exibirAlunos(): array
@@ -28,8 +28,7 @@ class AlunosModels
         $sql = "SELECT id, nome, email, telefone, valor_mensalidade, senha, situacao, observacao FROM Alunos";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

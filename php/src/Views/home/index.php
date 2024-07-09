@@ -22,11 +22,12 @@ $todosAlunos = $controller->index();
 <body>
 
     <h1>Lista de Alunos:</h1>
-    <form method="post" action="">
-        <label for="filtrar-tabela">Procurar pelo Aluno:</label>
-        <input type="text" name="filtro_nome" id="filtrar-tabela" placeholder="Digite o nome:">
-        <input type="submit" id="filtragem" value="Filtrar">
-    </form>
+
+    <button type="button" class="btn btn-primary">
+        <a href="/src/Views/create/index.php"
+            style="color: inherit; text-decoration: none; display: block; width: 100%; height: 100%;">Adicionar</a>
+    </button>
+
 
     <table class="table">
         <thead class="thead-dark">
@@ -34,6 +35,7 @@ $todosAlunos = $controller->index();
                 <th scope="col">Título</th>
                 <th scope="col">Descrição</th>
                 <th scope="col">Status</th>
+                <th scope="col">Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +44,8 @@ $todosAlunos = $controller->index();
                     <tr>
                         <td><?php echo $aluno['nome']; ?></td>
                         <td><?php echo ''; ?></td>
-                        <td><?php echo $aluno['status']; ?></td>
+                        <td><?php echo $aluno['situacao'] == 1 ? 'Ativo' : 'Desativo' ?></td>
+
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>

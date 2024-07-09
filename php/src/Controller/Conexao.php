@@ -6,61 +6,27 @@ use PDOException;
 
 class Conexao
 {
-    private $host;
-    private $user;
-    private $password;
-    private $db;
-    private $conn;
-    private static $oConexao;
+    private static $conexao;
 
-    private function __construct()
+    private function __construct() {}
+
+    public static function conectar(): PDO
     {
-        $this->host = getenv('DB_HOST') ?: 'db';
-        $this->user = getenv('DB_USER') ?: 'root';
-        $this->password = getenv('DB_PASSWORD') ?: 'root';
-        $this->db = getenv('DB_NAME') ?: 'mysql-network';
+        if (empty(self::$conexao)) {
+            $host = getenv('DB_HOST') ?: 'db';
+            $user = getenv('DB_USER') ?: 'admin';
+            $password = getenv('DB_PASSWORD') ?: 'admin';
+            $db = getenv('DB_NAME') ?: 'test_db';
 
-        try {
-            $dsn = "mysql:host={$this->host};dbname={$this->db};charset=utf8";
-            $this->conn = new PDO($dsn, $this->user, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die('Falha na conexão: ' . $e->getMessage());
+            try {
+                $dsn = "mysql:host={$host};dbname={$db};charset=utf8";
+                self::$conexao = new PDO($dsn, $user, $password);
+                self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die('Falha na conexão: ' . $e->getMessage());
+            }
         }
-    }
-
-    public static function conectar(): Conexao
-    {
-        if (empty(self::$oConexao)) {
-            self::$oConexao = new Conexao();
-        }
-        return self::$oConexao;
-    }
-
-    public function getConexao()
-    {
-        return $this->conn;
-    }
-
-    public function prepare(string $sql): \PDOStatement
-    {
-        return $this->conn->prepare($sql);
-    }
-
-    public function query(string $sql): ?\PDOStatement
-    {
-        $stmt = $this->conn->query($sql);
-        if ($stmt === false) {
-            throw new PDOException("Erro ao executar query: " . implode(":", $this->conn->errorInfo()));
-        }
-        return $stmt;
-    }
-
-    public function getTotalRegistro(string $sTabela): int
-    {
-        $sRecebe = "SELECT COUNT(*) as total FROM $sTabela;";
-        $stmt = $this->query($sRecebe);
-        $aResultado = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $aResultado['total'];
+        return self::$conexao;
     }
 }
+?>

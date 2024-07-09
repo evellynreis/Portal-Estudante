@@ -3,6 +3,7 @@ LABEL maintainer="Evelllyn Jade"
 
 # Instalação das extensões PHP necessárias
 RUN apt-get update && apt-get install -y \
+    libpq-dev \
     && docker-php-ext-install pdo pdo_mysql \
     && docker-php-ext-install mysqli \
     && docker-php-ext-enable mysqli \
@@ -14,5 +15,5 @@ RUN apt-get update && apt-get install -y \
 # Configuração do Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Exposição da porta 80
-EXPOSE 80
+# Exposição da porta
+EXPOSE 8001

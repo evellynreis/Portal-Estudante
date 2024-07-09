@@ -3,7 +3,17 @@ include_once "../../../vendor/autoload.php";
 use Student\Controller\AlunosController;
 
 $controller = new AlunosController();
-$todosAlunos = $controller->create();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $resultado = $controller->create();
+
+    // Exibe uma mensagem de sucesso ou erro após a submissão do formulário
+    if ($resultado) {
+        echo '<div class="alert alert-success" role="alert">Aluno adicionado com sucesso!</div>';
+    } else {
+        echo '<div class="alert alert-danger" role="alert">Erro ao adicionar aluno. Verifique os campos obrigatórios.</div>';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +24,7 @@ $todosAlunos = $controller->create();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Cadastrar</title>
+    <title>Cadastrar Aluno</title>
 </head>
 
 <body>
