@@ -1,0 +1,15 @@
+{
+    "name": "jadev/php",
+    "autoload": {
+        "psr-4": {
+            "Student\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "evellynreis",
+            "email": "jadevellyn@gmail.com"
+        }
+    ],
+    "require": {}
+}
