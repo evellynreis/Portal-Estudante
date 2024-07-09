@@ -6,15 +6,20 @@ use PDOException;
 
 class Conexao
 {
-    private $host = 'db';
-    private $user = 'root';
-    private $password = 'root';
-    private $db = 'mysql-network';
+    private $host;
+    private $user;
+    private $password;
+    private $db;
     private $conn;
     private static $oConexao;
 
     private function __construct()
     {
+        $this->host = getenv('DB_HOST') ?: 'db';
+        $this->user = getenv('DB_USER') ?: 'root';
+        $this->password = getenv('DB_PASSWORD') ?: 'root';
+        $this->db = getenv('DB_NAME') ?: 'mysql-network';
+
         try {
             $dsn = "mysql:host={$this->host};dbname={$this->db};charset=utf8";
             $this->conn = new PDO($dsn, $this->user, $this->password);
@@ -42,9 +47,13 @@ class Conexao
         return $this->conn->prepare($sql);
     }
 
-    public function query(string $sql): \PDOStatement
+    public function query(string $sql): ?\PDOStatement
     {
-        return $this->conn->query($sql);
+        $stmt = $this->conn->query($sql);
+        if ($stmt === false) {
+            throw new PDOException("Erro ao executar query: " . implode(":", $this->conn->errorInfo()));
+        }
+        return $stmt;
     }
 
     public function getTotalRegistro(string $sTabela): int

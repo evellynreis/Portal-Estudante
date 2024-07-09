@@ -4,9 +4,8 @@ services:
     image: mysql:5.7
     container_name: db
     restart: always
-    command: mysqld --sql_mode=""
     ports:
-      - 3306:3306
+      - "3306:3306"
     environment:
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
@@ -21,20 +20,25 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8088:8080
+      - "8088:8080"
     networks:
       - mysql-network
 
   php:
-    build: .
-    image: php:apache
+    build:
+      context: .
+      dockerfile: DockerFile
+    container_name: php
     restart: always
     volumes:
       - ./php:/var/www/html
     ports:
       - "8001:80"
+    depends_on:
+      - mysql
     networks:
       - mysql-network
 
 networks:
   mysql-network:
+    driver: bridge
