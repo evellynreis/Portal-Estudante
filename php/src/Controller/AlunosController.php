@@ -23,7 +23,7 @@ class AlunosController
             return false;
         }
 
-        // Validar os dados recebidos
+        // Valida os dados recebidos
         if (empty($data['nome']) || empty($data['senha'])) {
             return false;
         }
@@ -35,7 +35,7 @@ class AlunosController
             $data['telefone'] ?? '',
             $data['valor_mensalidade'] ?? '',
             $data['senha'],
-            $data['situacao'] ?? 1, // Defina um valor padrão se não especificado
+            $data['situacao'] ?? 1, // Define um valor padrão se não especificado
             $data['observacao'] ?? ''
         );
 
