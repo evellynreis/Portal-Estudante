@@ -62,11 +62,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <textarea class="form-control" id="observacao" name="observacao" rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-primary">
+                <a href="/src/Views/home/index.php" style="color: inherit; text-decoration: none;">Voltar</a>
+            </button>
         </form>
-
-        <button type="button" class="btn btn-primary mt-3">
-            <a href="/src/Views/home/index.php" style="color: inherit; text-decoration: none;">Voltar</a>
-        </button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

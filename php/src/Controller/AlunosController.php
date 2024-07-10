@@ -23,7 +23,7 @@ class AlunosController
             return false;
         }
 
-        // Validar os dados recebidos, apenas um exemplo
+        // Validar os dados recebidos
         if (empty($data['nome']) || empty($data['senha'])) {
             return false;
         }
@@ -61,7 +61,7 @@ class AlunosController
         }
 
         $aluno = new AlunosModels($conexao);
-        return $aluno->buscarAluno($id); // Método corrigido para buscarAluno
+        return $aluno->buscarAluno($id);
     }
 
     public function update(array $studentData)

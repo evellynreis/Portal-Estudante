@@ -4,7 +4,6 @@ use Student\Controller\AlunosController;
 
 $controller = new AlunosController();
 
-// Verifica se houve uma ação de exclusão
 if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
     $deleted = $controller->delete($_GET['id']);
     if ($deleted) {
@@ -31,15 +30,14 @@ $todosAlunos = $controller->index();
 <body>
 
     <div class="container mt-5">
-        <h2>Lista de Alunos:</h2>
-
-        <button type="button" class="btn btn-primary">
-            <a href="/src/Views/create/index.php"
-                style="color: inherit; text-decoration: none; display: block;">Adicionar</a>
-        </button>
+        <h2 class="d-flex justify-content-between">Lista de Alunos
+            <button type="button" class="btn btn-primary">
+                <a href="/src/Views/create/index.php"
+                    style="color: inherit; text-decoration: none; display: block;">Adicionar</a>
+            </button>
+        </h2>
 
         <?php
-        // Exibe mensagem de exclusão se existir
         if (isset($deleteMessage)) {
             echo $deleteMessage;
         }
