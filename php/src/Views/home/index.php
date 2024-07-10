@@ -31,11 +31,11 @@ $todosAlunos = $controller->index();
 <body>
 
     <div class="container mt-5">
-        <h1>Lista de Alunos:</h1>
+        <h2>Lista de Alunos:</h2>
 
         <button type="button" class="btn btn-primary">
             <a href="/src/Views/create/index.php"
-                style="color: inherit; text-decoration: none; display: block; width: 100%; height: 100%;">Adicionar</a>
+                style="color: inherit; text-decoration: none; display: block;">Adicionar</a>
         </button>
 
         <?php
@@ -48,8 +48,8 @@ $todosAlunos = $controller->index();
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descrição</th>
                     <th scope="col">Situação</th>
                     <th scope="col">Ações</th>
                 </tr>
@@ -62,6 +62,7 @@ $todosAlunos = $controller->index();
                             <td><?php echo $aluno['nome']; ?></td>
                             <td><?php echo $aluno['situacao'] == 1 ? 'Ativo' : 'Inativo' ?></td>
                             <td>
+                                <a href="" class="btn btn-primary">Editar</a>
                                 <a href="?action=delete&id=<?php echo $aluno['id']; ?>"
                                     onclick="return confirm('Tem certeza que deseja excluir este aluno?')"
                                     class="btn btn-danger">Excluir</a>
