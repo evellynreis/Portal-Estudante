@@ -57,5 +57,16 @@ class AlunosController
         return $addAlunos;
     }
 
+    public function delete($id)
+    {
+        $conexao = Conexao::conectar();
+        if (!$conexao) {
+            return false;
+        }
+
+        $aluno = new AlunosModels($conexao);
+        return $aluno->excluirAluno($id);
+    }
+
 }
 ?>

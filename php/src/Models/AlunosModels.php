@@ -31,4 +31,14 @@ class AlunosModels
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function excluirAluno($id): bool
+    {
+        $sql = 'DELETE FROM Alunos WHERE id = ?';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+
+        return $stmt->rowCount() > 0;
+    }
 }
+?>
