@@ -46,8 +46,8 @@ $todosAlunos = $controller->index();
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Título</th>
                     <th scope="col">Situação</th>
                     <th scope="col">Ações</th>
                 </tr>
