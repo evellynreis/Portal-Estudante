@@ -7,7 +7,6 @@ $controller = new AlunosController();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $resultado = $controller->create();
 
-    // Exibe uma mensagem de sucesso ou erro após a submissão do formulário
     if ($resultado) {
         echo '<div class="alert alert-success" role="alert">Aluno adicionado com sucesso!</div>';
     } else {
