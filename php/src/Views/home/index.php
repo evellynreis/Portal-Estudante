@@ -35,17 +35,19 @@ $todosAlunos = $controller->index();
                 <th scope="col">Título</th>
                 <th scope="col">Descrição</th>
                 <th scope="col">Status</th>
-                <th scope="col">Delete</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Excluir</th>
             </tr>
         </thead>
         <tbody>
             <?php if (!empty($todosAlunos)): ?>
                 <?php foreach ($todosAlunos as $aluno): ?>
                     <tr>
+                        <td><?php echo $aluno['id']; ?></td>
                         <td><?php echo $aluno['nome']; ?></td>
-                        <td><?php echo ''; ?></td>
                         <td><?php echo $aluno['situacao'] == 1 ? 'Ativo' : 'Desativo' ?></td>
-
+                        <td><a href="">Edit</a></td>
+                        <td><a href="">Delete</a></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
