@@ -32,6 +32,24 @@ class AlunosModels
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function buscarAluno($id)
+    {
+        $sql = "SELECT id, nome, email, telefone, valor_mensalidade, senha, situacao, observacao FROM Alunos WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function atualizarAluno($id, $nome, $email, $telefone, $valorMensalidade, $senha, $situacao, $observacao): bool
+    {
+        $sql = 'UPDATE Alunos SET nome=?, email=?, telefone=?, valor_mensalidade=?, senha=?, situacao=?, observacao=? WHERE id=?';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$nome, $email, $telefone, $valorMensalidade, $senha, $situacao, $observacao, $id]);
+
+        return $stmt->rowCount() > 0;
+    }
+
     public function excluirAluno($id): bool
     {
         $sql = 'DELETE FROM Alunos WHERE id = ?';
