@@ -6,8 +6,12 @@
 
 actor: AcceptanceTester
 modules:
-    enabled:
-        - PhpBrowser:
-            url: http://localhost/myapp
-        - \Helper\Acceptance
-step_decorators: ~        
+   enabled:
+      - WebDriver:
+         url: 'http://localhost:8001/'
+         browser: chrome
+         window_size: 1280x960
+         capabilities:
+            chromeOptions:
+               args: ["--disable-gpu"]
+            
